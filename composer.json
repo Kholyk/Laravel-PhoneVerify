@@ -1,0 +1,20 @@
+{
+  "name": "kholyk/laravel-phoneverify",
+  "description": "Laravel user's phone number verification (smsc.ru)",
+  "type": "library",
+  "require": {
+    "php": ">=7.3"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Oleg Kholyk",
+      "email": "oleg@kholyk.ru"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Kholyk\\PhoneVerify\\": "src/"
+    }
+  }
+}
