@@ -1,14 +1,6 @@
 {
   "name": "kholyk/laravel-phoneverify",
   "description": "Laravel user's phone number verification (smsc.ru)",
-  "type": "library",
-  "require": {
-    "php": ">=7.3",
-    "illuminate/support": "^6|^7|^8|^9",
-    "illuminate/contracts": "^6|^7|^8|^9",
-    "symfony/http-foundation": "^4|^5",
-    "symfony/http-kernel": "^4.3.4|^5"
-  },
   "license": "MIT",
   "authors": [
     {
@@ -16,9 +8,40 @@
       "email": "oleg@kholyk.ru"
     }
   ],
+  "require": {
+    "php": ">=7.2",
+    "illuminate/support": "^6|^7|^8|^9",
+    "illuminate/contracts": "^6|^7|^8|^9",
+    "symfony/http-foundation": "^4|^5",
+    "symfony/http-kernel": "^4.3.4|^5"
+  },
+  "require-dev": {
+    "laravel/framework": "^6|^7|^8",
+    "phpunit/phpunit": "^6|^7|^8|^9",
+    "squizlabs/php_codesniffer": "^3.5"
+  },
   "autoload": {
     "psr-4": {
       "Kholyk\\PhoneVerify\\": "src/"
     }
-  }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Kholyk\\PhoneVerify\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Kholyk\\Cors\\CorsServiceProvider"
+      ]
+    }
+  },
+  "scripts": {
+    "test": "phpunit",
+    "check-style": "phpcs -p --standard=psr12 src/",
+    "fix-style": "phpcbf -p --standard=psr12 src/"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }

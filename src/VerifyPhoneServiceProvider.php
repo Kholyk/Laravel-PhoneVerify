@@ -2,23 +2,12 @@
 
 namespace Kholyk\PhoneVerify;
 
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Kholyk\PhoneVerify\Listeners\SendPhoneVerificationNotification;
+use Illuminate\Foundation\Application;
+use Illuminate\Support\ServiceProvider;
+
 
 class VerifyPhoneServiceProvider extends ServiceProvider
 {
-    /**
-     * The event listener mappings for the application.
-     *
-     * @var array
-     */
-    protected $listen = [
-        Registered::class => [
-            SendPhoneVerificationNotification::class,
-        ],
-    ];
-
     /**
      * Bootstrap the application services.
      *
@@ -26,21 +15,16 @@ class VerifyPhoneServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        parent::boot();
+            $this->registerMigrations();
 
-        $this->loadRoutesFrom(__DIR__ . '/../routes/phone-verify.php');
-        $this->loadMigrationsFrom(dirname(__DIR__) . '/../database/migrations');
-
-        if (function_exists('config_path')) {
             $this->publishes([
-                dirname(__DIR__) . '/../config/config.php' => config_path('phone-verify.php'),
-            ], 'phone-verify-config');
-        }
+                __DIR__.'/../database/migrations' => database_path('migrations'),
+            ], 'phoneverify-migrations');
+    }
 
-        $this->publishes([
-            dirname(__DIR__) . '/../database/migrations' => database_path('migrations'),
-        ], 'phone-verify-migrations');
-
+    protected function registerMigrations()
+    {
+        return $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
     }
 
     /**
@@ -50,6 +34,6 @@ class VerifyPhoneServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->make('Kholyk\PhoneVerify\Controllers\VerificationController');
+//        $this->app->make('Kholyk\PhoneVerify\Controllers\VerificationController');
     }
 }
