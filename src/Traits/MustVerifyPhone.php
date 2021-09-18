@@ -1,6 +1,6 @@
 <?php
 
-namespace Kholyk\PhoneVerify;
+namespace Kholyk\PhoneVerify\Traits;
 
 use Kholyk\PhoneVerify\Notifications\VerifyPhoneNotification;
 
