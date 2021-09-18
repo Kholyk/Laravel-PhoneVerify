@@ -28,17 +28,17 @@ class VerifyPhoneServiceProvider extends ServiceProvider
     {
         parent::boot();
 
-        $this->loadRoutesFrom(__DIR__ . '/routes/phone-verify.php');
-        $this->loadMigrationsFrom(dirname(__DIR__) . '/database/migrations');
+        $this->loadRoutesFrom(__DIR__ . '/../routes/phone-verify.php');
+        $this->loadMigrationsFrom(dirname(__DIR__) . '/../database/migrations');
 
         if (function_exists('config_path')) {
             $this->publishes([
-                dirname(__DIR__) . '/config/config.php' => config_path('phone-verify.php'),
+                dirname(__DIR__) . '/../config/config.php' => config_path('phone-verify.php'),
             ], 'phone-verify-config');
         }
 
         $this->publishes([
-            dirname(__DIR__) . '/database/migrations' => database_path('migrations'),
+            dirname(__DIR__) . '/../database/migrations' => database_path('migrations'),
         ], 'phone-verify-migrations');
 
     }
