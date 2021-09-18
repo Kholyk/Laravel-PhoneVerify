@@ -33,7 +33,7 @@
   "extra": {
     "laravel": {
       "providers": [
-        "Kholyk\\Cors\\CorsServiceProvider"
+        "Kholyk\\PhoneVerify\\VerifyPhoneServiceProvider"
       ]
     }
   },
