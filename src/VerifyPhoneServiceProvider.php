@@ -26,6 +26,8 @@ class VerifyPhoneServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../config/config.php' => config_path('phone-verify.php'),
         ], 'honeverify-config');
+
+        $this->defineRoutes();
     }
 
     protected function registerMigrations()
