@@ -2,12 +2,13 @@
 
 namespace Kholyk\PhoneVerify;
 
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\ServiceProvider;
-use Kholyk\PhoneVerify\Controllers\PhoneVerificationController;
-use Kholyk\PhoneVerify\Events\VerifyPhoneEvent;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
+use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Kholyk\PhoneVerify\Listeners\SendPhoneVerificationSMS;
+use Kholyk\PhoneVerify\Events\VerifyPhoneEvent;
+use Kholyk\PhoneVerify\Controllers\PhoneVerificationController;
+
 
 
 
