@@ -28,7 +28,10 @@ class SendPhoneVerificationSMS
     public function handle(VerifyPhoneEvent $event)
     {
         $user = $event->user;
-        $user->sms = 'test';
+        $user->sms = rand(0000, 9999);
         $user->save();
+
+        $sms = new Smsc($user->phone, $user->sms);
+        $sms->send();
     }
 }
