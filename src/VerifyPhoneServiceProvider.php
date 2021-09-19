@@ -6,16 +6,16 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Laravel\Sanctum\Http\Controllers\CsrfCookieController;
-use Kholyk\PhoneVerify\Listeners\SendPhoneVerificationSMS;
-use Kholyk\PhoneVerify\Events\VerifyPhoneEvent;
-//use Kholyk\PhoneVerify\Controllers\PhoneVerificationController;
+//use Kholyk\PhoneVerify\Listeners\SendPhoneVerificationSMS;
+//use Kholyk\PhoneVerify\Events\VerifyPhoneEvent;
+
 
 
 class VerifyPhoneServiceProvider extends ServiceProvider
 {
     protected $listen = [
-        VerifyPhoneEvent::class => [
-            SendPhoneVerificationSMS::class
+        Events\VerifyPhoneEvent::class => [
+            Listeners\SendPhoneVerificationSMS::class
         ],
     ];
 
@@ -29,7 +29,7 @@ class VerifyPhoneServiceProvider extends ServiceProvider
         $this->registerMigrations();
         $this->registerViews();
 
-        if ($this->app->runningInConsole()) {
+//        if ($this->app->runningInConsole()) {
             $this->publishes([
                 __DIR__ . '/../database/migrations' => database_path('migrations'),
             ], 'phoneverify-migrations');
@@ -43,7 +43,7 @@ class VerifyPhoneServiceProvider extends ServiceProvider
             ]);
 
             $this->defineRoutes();
-        }
+//        }
 
 
     }
