@@ -29,12 +29,15 @@ class VerifyPhoneServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        parent::boot();
+
         $this->registerMigrations();
         $this->registerViews();
 
 //        if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__ . '/../database/migrations' => database_path('migrations/'.date('Y_m_d_His', time()).'_cupdate_users_table.php'),
+                __DIR__ . '/../database/migrations/2040_01_01_000000_update_users_table.php' => database_path('migrations/'.date('Y_m_d_His', time()).'_update_users_table.php'),
+
             ], 'phoneverify-migrations');
 
             $this->publishes([
@@ -75,7 +78,5 @@ class VerifyPhoneServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'phone-verify');
         $this->app->make(PhoneVerificationController::class);
-        $this->app->bind(SendPhoneVerificationSMS::class, SendPhoneVerificationSMS::class);
-        $this->app->bind(VerifyPhoneEvent::class, VerifyPhoneEvent::class);
     }
 }
