@@ -4,12 +4,23 @@ namespace Kholyk\PhoneVerify\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Kholyk\PhoneVerify\Events\VerifyPhoneEvent;
+use Illuminate\Support\Facades\Auth;
 
 class PhoneVerificationController extends Controller
 {
-    public function __construct()
+
+    public function form()
     {
-        $this->middleware('throttle:6,1')->only('verify', 'resend');
+        $user = Auth::user();
+        var_dump($user);
+        print_r('<hr>');
+        var_dump(VerifyPhoneEvent::class);
+        VerifyPhoneEvent::dispatch($user);
+//        VerifyPhoneEvent::dispatch($user);
+
+
+        return view('phoneverify.form');
     }
 
     public function verify(Request $request)

@@ -4,12 +4,20 @@ namespace Kholyk\PhoneVerify;
 
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Laravel\Sanctum\Http\Controllers\CsrfCookieController;
+use Kholyk\PhoneVerify\Listeners\SendPhoneVerificationSMS;
+use Kholyk\PhoneVerify\Events\VerifyPhoneEvent;
 
 
 class VerifyPhoneServiceProvider extends ServiceProvider
 {
+    protected $listen = [
+        VerifyPhoneEvent::class => [
+            SendPhoneVerificationSMS::class
+        ],
+    ];
+
     /**
      * Bootstrap the application services.
      *
@@ -18,6 +26,7 @@ class VerifyPhoneServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerMigrations();
+        $this->registerViews();
 
         $this->publishes([
             __DIR__ . '/../database/migrations' => database_path('migrations'),
@@ -27,7 +36,12 @@ class VerifyPhoneServiceProvider extends ServiceProvider
             __DIR__ . '/../config/config.php' => config_path('phone-verify.php'),
         ], 'honeverify-config');
 
+        $this->publishes([
+            __DIR__ . '/../resources/views' => resource_path('views/phoneverify'),
+        ]);
+
         $this->defineRoutes();
+
     }
 
     protected function registerMigrations()
@@ -40,6 +54,11 @@ class VerifyPhoneServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__ . '/routes.php');
     }
 
+    protected function registerViews()
+    {
+        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'phoneverify');
+    }
+
     /**
      * Register the application services.
      *
@@ -47,6 +66,6 @@ class VerifyPhoneServiceProvider extends ServiceProvider
      */
     public function register()
     {
-//        $this->app->make('Kholyk\PhoneVerify\Controllers\VerificationController');
+
     }
 }
