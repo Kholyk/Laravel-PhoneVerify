@@ -4,15 +4,17 @@ namespace Kholyk\PhoneVerify;
 
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Laravel\Sanctum\Http\Controllers\CsrfCookieController;
-//use Kholyk\PhoneVerify\Listeners\SendPhoneVerificationSMS;
-//use Kholyk\PhoneVerify\Events\VerifyPhoneEvent;
+use Illuminate\Support\ServiceProvider;
+use Kholyk\PhoneVerify\Controllers\PhoneVerificationController;
+use Kholyk\PhoneVerify\Events\VerifyPhoneEvent;
+use Kholyk\PhoneVerify\Listeners\SendPhoneVerificationSMS;
+
 
 
 
 class VerifyPhoneServiceProvider extends ServiceProvider
 {
+
     protected $listen = [
         Events\VerifyPhoneEvent::class => [
             Listeners\SendPhoneVerificationSMS::class
@@ -71,6 +73,6 @@ class VerifyPhoneServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'phone-verify');
-        $this->app->make('Kholyk\PhoneVerify\Controllers\PhoneVerificationController');
+        $this->app->make(PhoneVerificationController::class);
     }
 }
