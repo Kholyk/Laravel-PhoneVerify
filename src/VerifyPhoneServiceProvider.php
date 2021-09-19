@@ -29,6 +29,8 @@ class VerifyPhoneServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        parent::boot();
+
         $this->registerMigrations();
         $this->registerViews();
 
