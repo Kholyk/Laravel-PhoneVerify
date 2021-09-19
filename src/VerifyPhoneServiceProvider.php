@@ -5,9 +5,7 @@ namespace Kholyk\PhoneVerify;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Support\ServiceProvider;
-use Kholyk\PhoneVerify\Listeners\SendPhoneVerificationSMS;
-use Kholyk\PhoneVerify\Events\VerifyPhoneEvent;
-use Kholyk\PhoneVerify\Controllers\PhoneVerificationController;
+use Kholyk\PhoneVerify\Providers\EventServiceProvider;
 
 
 
@@ -15,13 +13,6 @@ use Kholyk\PhoneVerify\Controllers\PhoneVerificationController;
 
 class VerifyPhoneServiceProvider extends ServiceProvider
 {
-
-    protected $listen = [
-        Events\VerifyPhoneEvent::class => [
-            Listeners\SendPhoneVerificationSMS::class
-        ],
-    ];
-
     /**
      * Bootstrap the application services.
      *
@@ -75,6 +66,6 @@ class VerifyPhoneServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'phone-verify');
-        $this->app->make(PhoneVerificationController::class);
+        $this->app->register(EventServiceProvider::class);
     }
 }
