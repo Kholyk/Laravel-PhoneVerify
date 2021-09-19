@@ -8,6 +8,7 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 use Laravel\Sanctum\Http\Controllers\CsrfCookieController;
 use Kholyk\PhoneVerify\Listeners\SendPhoneVerificationSMS;
 use Kholyk\PhoneVerify\Events\VerifyPhoneEvent;
+//use Kholyk\PhoneVerify\Controllers\PhoneVerificationController;
 
 
 class VerifyPhoneServiceProvider extends ServiceProvider
@@ -28,19 +29,22 @@ class VerifyPhoneServiceProvider extends ServiceProvider
         $this->registerMigrations();
         $this->registerViews();
 
-        $this->publishes([
-            __DIR__ . '/../database/migrations' => database_path('migrations'),
-        ], 'phoneverify-migrations');
+        if ($this->app->runningInConsole()) {
+            $this->publishes([
+                __DIR__ . '/../database/migrations' => database_path('migrations'),
+            ], 'phoneverify-migrations');
 
-        $this->publishes([
-            __DIR__ . '/../config/config.php' => config_path('phone-verify.php'),
-        ], 'honeverify-config');
+            $this->publishes([
+                __DIR__ . '/../config/config.php' => config_path('phone-verify.php'),
+            ], 'honeverify-config');
 
-        $this->publishes([
-            __DIR__ . '/../resources/views' => resource_path('views/phoneverify'),
-        ]);
+            $this->publishes([
+                __DIR__ . '/../resources/views' => resource_path('views/phoneverify'),
+            ]);
 
-        $this->defineRoutes();
+            $this->defineRoutes();
+        }
+
 
     }
 
@@ -66,6 +70,7 @@ class VerifyPhoneServiceProvider extends ServiceProvider
      */
     public function register()
     {
-
+        $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'phone-verify');
+        $this->app->make('Kholyk\PhoneVerify\Controllers\PhoneVerificationController');
     }
 }
